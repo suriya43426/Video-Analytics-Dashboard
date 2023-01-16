@@ -41,8 +41,7 @@ ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 
 from models.common import DetectMultiBackend
 from utils.datasets import IMG_FORMATS, VID_FORMATS, LoadImages, LoadStreams
-from utils.general import (LOGGER, check_file, check_img_size, check_imshow, check_requirements, colorstr,
-                           increment_path, non_max_suppression, print_args, scale_coords, strip_optimizer, xyxy2xywh)
+from utils.general import LOGGER, check_file, check_img_size, check_imshow, check_requirements, colorstr,increment_path, non_max_suppression, print_args, scale_coords, strip_optimizer, xyxy2xywh, apply_classifier
 from utils.plots import Annotator, colors, save_one_box
 from utils.torch_utils import select_device, time_sync
 
@@ -133,7 +132,7 @@ def run(weights=ROOT / 'yolov5s.pt',  # model.pt path(s)
         dt[2] += time_sync() - t3
 
         # Second-stage classifier (optional)
-        # pred = utils.general.apply_classifier(pred, classifier_model, im, im0s)
+        pred = utils.general.apply_classifier(pred, classifier_model, im, im0s)
 
         # Process predictions
         for i, det in enumerate(pred):  # per image
